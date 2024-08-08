@@ -1,0 +1,53 @@
+<nav class="dark:bg-gray-900 fixed w-full z-20 top-0 start-0 md:px-8 xl:px-24 transition-shadow duration-300" [ngClass]="{ 'shadow-xl bg-white': isScrolled }">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="javascript:void(0)" class="flex items-center space-x-3 rtl:space-x-reverse" style="width: 120px; height: 20px;">
+        <img src="assets/img/logo.png">
+    </a>
+    <div class="flex md:order-2 space-x-4 sm:space-x-0 md:space-x-2 rtl:space-x-reverse">
+      <!-- <svg class="w-6 h-6 text-gray-800 dark:text-white mt-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-width="1" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+      </svg>
+      <svg class="w-6 h-6 text-gray-800 dark:text-white mt-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"/>
+      </svg> -->
+      <button type="button" routerLink="/login" class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Login</button>
+      <button type="button" routerLink="/signup" class="text-white bg-blue-700 hidden md:inline-block hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Bergabung</button>
+
+      <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+    </div>
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+      <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0">
+        <li>
+          <a href="#welcome"
+             (click)="scrollToSection($event, '#welcome')"
+             [class.bg-blue-700]="activeSection !== '#welcome'"
+             [class.text-blue-700]="activeSection === '#welcome'"
+             class="block py-2 px-3 rounded bg-transparent p-0 dark:text-blue-500"
+             aria-current="page">Welcome</a>
+        </li>
+        <li>
+          <a href="#company"
+             (click)="scrollToSection($event, '#company')"
+             [class.bg-blue-700]="activeSection !== '#company'"
+             [class.text-blue-700]="activeSection === '#company'"
+             class="block py-2 px-3 rounded bg-transparent p-0 dark:text-blue-500">Company</a>
+        </li>
+        <li>
+          <a href="#feature"
+             (click)="scrollToSection($event, '#feature')"
+             [class.bg-blue-700]="activeSection !== '#feature'"
+             [class.text-blue-700]="activeSection === '#feature'"
+             class="block py-2 px-3 rounded bg-transparent p-0 dark:text-blue-500">Feature</a>
+        </li>
+        <li>
+          <button type="button" class="text-white bg-red-700 md:hidden hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 my-4 text-center dark:bg-red-600 dark:hover:bg-blue-700 dark:focus:ring-red-800">Login</button>
+        </li>
+      </ul>
+    </div>    
+  </div>
+</nav>

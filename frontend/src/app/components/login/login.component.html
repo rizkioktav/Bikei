@@ -1,0 +1,62 @@
+<div class="absolute inset-x-0 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+  <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 95.7%, 74.1% 44.1%)"></div>
+</div>
+<div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-50rem)]" aria-hidden="true">
+  <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-50 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+</div>
+<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 min-h-screen">
+  <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+    <img class="w-44 h-12 mr-2" src="/assets/img/logo.png" alt="logo">   
+  </a>
+  <div class="w-full bg-white rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+    <div class="p-6 space-y-4 md:space-y-3 sm:p-8">
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        Sign in to your account
+      </h1>
+      <form class="space-y-4 md:space-y-4" #loginForm="ngForm" (ngSubmit)="submitLogin(loginForm)">
+        <div>
+          <label for="login" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email or phone number</label>
+          <input type="text" name="login" id="login" [(ngModel)]="form.login" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com or 08123456789" required>
+        </div>
+        <div>
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+          <input type="password" name="password" id="password" [(ngModel)]="form.password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <input id="remember" aria-describedby="remember" type="checkbox" [(ngModel)]="form.rememberMe" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
+            </div>
+          </div>
+          <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+        </div>
+        <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign In</button>
+      </form>
+      <div class="relative pt-4">
+        <span class="block w-full h-px bg-gray-300"></span>
+        <p class="inline-block w-fit text-sm bg-white px-2 absolute -top-2 inset-x-0 mx-auto pt-3">
+          Or continue with
+        </p>
+      </div>
+      <div class="space-y-2 pt-4 text-sm font-medium">
+        <!-- Google Button -->
+        <button (click)="signInWithGoogle()" class="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
+          <img src="https://raw.githubusercontent.com/sidiDev/remote-assets/7cd06bf1d8859c578c2efbfda2c68bd6bedc66d8/google-icon.svg" alt="Google" class="w-5 h-5"/>
+          Continue with Google
+        </button>
+        <!-- Twitter Button -->
+        <button class="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
+          <img src="https://cdn.simpleicons.org/facebook/blue" alt="Facebook" class="w-5 h-5"/>
+          Continue with Facebook
+        </button>        
+      </div>
+      <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+        Don’t have an account yet? <a href="#" routerLink="/signup" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+      </p>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,316 @@
+<div class="p-4 sm:ml-64 md:ml-64">
+  <div class="p-4 rounded-lg dark:border-gray-700 mt-14 h-[550px]">
+    <div class="overflow-x-auto shadow-md sm:rounded-lg h-full">
+      <div class="flex flex-row md:flex-row sm:flex-row items-center justify-between flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+        <div>
+          <button (click)="toggleAksiModal()" data-dropdown-placement="right" class="inline-flex ms-5 items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+            <span class="sr-only">Tombol Aksi</span>
+            Aksi
+            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div *ngIf="isAksiModal" class="fixed z-50 ms-5 mt-3 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+            <div class="flex justify-end p-2">
+              <button (click)="hideAksiModal()" aria-label="Close" class="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
+              <li>
+                <a href="javascript:void(0)" (click)="showPindahOwnerModal()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pindah Owner</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" (click)="showTambahKaryawanModal()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tambah Karyawan</a>
+              </li>
+              <!-- <li>
+                <a href="javascript:void(0)" (click)="showAturJabatanModal()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Atur Jabatan</a>
+              </li> -->
+              <li>
+                <a href="javascript:void(0)" (click)="showGenerateTokenModal()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Generate Token</a>
+              </li>
+            </ul>
+            <!-- <div class="py-1">
+              <a href="javascript:void(0)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Hapus Pengguna</a>
+            </div> -->
+          </div>
+
+          <!-- Pindah Owner Modal -->
+          <div *ngIf="isPindahOwnerModal" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Pindah Kepemilikan</h3>
+                  <button type="button" (click)="hidePindahOwnerModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Tutup modal</span>
+                  </button>
+                </div>
+                <form class="p-4 md:p-5" (ngSubmit)="submitTransferOwnership()">
+                  <div class="grid gap-4 mb-4">
+                    <div class="col-span-2">
+                      <label for="new-owner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email atau Nomor HP Pemilik Baru</label>
+                      <input type="text" [(ngModel)]="transferOwnershipData.target_identifier" name="new-owner" id="new-owner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukkan email atau nomor HP" required>
+                    </div>
+                    <div class="col-span-2">
+                      <label for="new-role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan Pemilik Baru</label>
+                      <input type="text" id="new-role" value="Business Owner" readonly class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                    </div>
+                    <div class="col-span-2">
+                      <label for="current-owner-role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan Baru Anda</label>
+                      <select id="current-owner-role" [(ngModel)]="transferOwnershipData.new_id_role" name="new_role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                        <option *ngFor="let role of roles" [value]="role.id">{{ role.role }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Kirim</button>
+                    <button type="button" (click)="hidePindahOwnerModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>        
+
+          <!-- Tambah Karyawan Modal -->
+          <div *ngIf="isTambahKaryawanModal" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Invite Pengguna Baru</h3>
+                  <button type="button" (click)="hideTambahKaryawanModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Tutup modal</span>
+                  </button>
+                </div>
+                <form class="p-4 md:p-5" (ngSubmit)="submitInvite()">
+                  <div class="grid gap-4 mb-4">
+                    <div class="col-span-2">
+                      <label for="identifier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email atau Nomor HP</label>
+                      <input type="text" name="identifier" id="identifier" [(ngModel)]="inviteData.identifier" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukkan email atau nomor HP">
+                    </div>
+                    <div class="col-span-2">
+                      <label for="idRole" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
+                      <select id="idRole" name="idRole" [(ngModel)]="inviteData.id_role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option *ngFor="let role of roles" [value]="role.id">{{ role.role }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Kirim</button>
+                </form>
+                          
+              </div>
+            </div>
+          </div>
+
+          <!-- Atur Jabatan Modal -->
+          <!-- <div *ngIf="isAturJabatanModal" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Atur Jabatan</h3>
+                  <button type="button" (click)="hideAturJabatanModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Tutup modal</span>
+                  </button>
+                </div>
+                <form class="p-4 md:p-5">
+                  <div class="grid gap-4 mb-4">
+                    <div class="col-span-2">
+                      <label for="current-user" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pengguna</label>
+                      <select id="current-user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="1">User 1</option>
+                        <option value="2">User 2</option>
+                        <option value="3">User 3</option>
+                      </select>
+                    </div>
+                    <div class="col-span-2">
+                      <label for="current-role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan Saat Ini</label>
+                      <select id="current-role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="1">Investor</option>
+                        <option value="3">Komisaris</option>
+                        <option value="4">Direktur</option>
+                        <option value="5">Manager</option>
+                        <option value="6">Supervisor</option>
+                        <option value="7">Staff</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Perbarui Jabatan
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div> -->
+
+          <div *ngIf="isGenerateTokenModal" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                  <div class="flex flex-col">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Generate Token</h3>
+                    <span class="text-xs w-72">Digunakan agar user lain bisa bergabung dengan company anda dengan menginputkan token ini</span>
+                  </div>
+                  <button type="button" (click)="hideGenerateTokenModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Tutup modal</span>
+                  </button>
+                </div>
+                <form class="p-4 md:p-5">
+                  <div class="grid gap-4 mb-4">
+                    <div class="col-span-2">
+                      <label for="new-owner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Token</label>
+                      <div class="flex items-center space-x-4">
+                        <input type="text" [value]="generatedToken" readonly class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Token akan muncul di sini">
+                        <button (click)="showTokenList()" class="inline-flex ms-5 items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                          <span class="sr-only text-sm"></span>
+                          Cek Token Aktif
+                        </button> 
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-4 mb-4">
+                    <button type="submit" (click)="generateToken()" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Generate</button>
+                    <button type="button" (click)="hideGenerateTokenModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Batal</button>
+                  </div>
+                </form>
+                <div class="px-5 pb-4" *ngIf="isTokenListVisible">
+                  <div class="flex items-center mb-2">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">List Token Aktif</label>
+                    <button type="button" (click)="hideTokenList()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                      </svg>
+                      <span class="sr-only">Tutup modal</span>
+                    </button>
+                  </div>
+                  <div class="grid grid-cols-3 gap-4">
+                    <div *ngFor="let token of tokens" class="flex items-center justify-center p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm h-8">
+                      <h3 class="text-xs font-medium text-gray-900 dark:text-white text-center">{{ token }}</h3>
+                    </div>
+                  </div>
+                </div>              
+              </div>
+            </div>
+          </div>   
+        </div>
+        <label for="table-search" class="sr-only">Pencarian</label>
+        <div class="relative me-5">
+          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+          </div>
+          <input type="text" id="table-search-users" class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full lg:w-80 md:w-60 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari pengguna">
+        </div>        
+      </div>
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 h-100">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nama</th>
+            <th scope="col" class="px-6 py-3">Posisi</th>
+            <th scope="col" class="px-6 py-3">Status</th>
+            <th scope="col" class="px-6 py-3">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let member of companyData.members" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+              <img class="w-10 h-10 rounded-full" [src]="member.avatarUrl || '/default-avatar.jpg'" alt="Gambar {{member.nama}}">
+              <div class="ps-3">
+                <div class="text-base font-semibold">{{ member.nama }}</div>
+                <div class="font-normal text-gray-500">{{ member.email }}</div>
+              </div>
+            </th>
+            <td class="px-6 py-4">{{ member.role }}</td>
+            <td class="px-6 py-4">
+              <div class="flex items-center">
+                <div class="h-2.5 w-2.5 rounded-full" [ngClass]="{'bg-green-500': member.status === 'Online', 'bg-red-500': member.status !== 'Online'}"></div> 
+                {{ member.status }}
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <!-- Toggle modal -->
+              <a href="javascript:void(0)" type="button" data-modal-target="editUserModal" data-modal-show="editUserModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit pengguna</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Edit user modal -->
+      <div id="editUserModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+          <div class="relative w-full max-w-2xl max-h-full">
+              <!-- Modal content -->
+              <form class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                  <!-- Modal header -->
+                  <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                          Edit user
+                      </h3>
+                      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="editUserModal">
+                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                      </svg>
+                      <span class="sr-only">Close modal</span>
+                  </button>
+                  </div>
+                  <!-- Modal body -->
+                  <div class="p-6 space-y-6">
+                      <div class="grid grid-cols-6 gap-6">
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                              <input type="text" name="first-name" id="first-name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bonnie" required="">
+                          </div>
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="last-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                              <input type="text" name="last-name" id="last-name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Green" required="">
+                          </div>
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                              <input type="email" name="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example&#64;company.com" required="">
+                          </div>
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="phone-number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                              <input type="number" name="phone-number" id="phone-number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. +(12)3456 789" required="">
+                          </div>
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="department" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
+                              <input type="text" name="department" id="department" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Development" required="">
+                          </div>
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
+                              <input type="number" name="company" id="company" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123456" required="">
+                          </div>
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="current-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Password</label>
+                              <input type="password" name="current-password" id="current-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••" required="">
+                          </div>
+                          <div class="col-span-6 sm:col-span-3">
+                              <label for="new-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                              <input type="password" name="new-password" id="new-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••" required="">
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Modal footer -->
+                  <div class="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+                      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save all</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
