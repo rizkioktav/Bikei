@@ -6,3 +6,7 @@ use App\Http\Controllers\GoogleAuthController;
 Route::get('auth/google', [googleAuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('auth/google/callback', [googleAuthController::class, 'handleGoogleCallback']);
 
+
+Route::get('/', function () {
+  return view('welcome');
+});

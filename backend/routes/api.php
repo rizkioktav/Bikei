@@ -11,6 +11,7 @@ use App\Http\Controllers\NotifController;
 // Route untuk register dan login dengan JWT Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/users', [UserController::class, 'getAllUsers']);
 
 // Route untuk logout (menggunakan middleware auth:api)
 Route::middleware(['auth:api'])->group(function() {
