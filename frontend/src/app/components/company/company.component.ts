@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CompanyService } from '../../services/services-company/company.service';
 import { UserService } from '../../services/services-user/user.service';
 import { NgForm } from '@angular/forms';
+
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -21,21 +22,21 @@ export class CompanyComponent implements OnInit  {
   companies: any[] = [];  
   selectedTab: string = 'companies';
   invitations: any[] = [];
-  joins: any[] = [];
+  joins: any[] = []; 
   offerings: any[] = []; 
   joinToCompanies: any[] = [];
   currentUserId: any;
 
   isDropdownOpen = false;
   isNotifications = false;
-  isActiveNotifications = false;
   isBuatPerusahaanModalVisible: boolean = false;
+  isActiveNotifications: boolean = false;
 
   constructor(
     private authService: AuthService, 
     private router: Router, 
     private companyService: CompanyService,
-    private userService: UserService,
+    private userService: UserService
   ) {}
   
   ngOnInit(): void {
@@ -48,6 +49,7 @@ export class CompanyComponent implements OnInit  {
       },
       error => {
         console.error('Error fetching user data', error);
+        alert('Gagal mengambil data pengguna');
       }
     );
   }
@@ -71,6 +73,7 @@ export class CompanyComponent implements OnInit  {
       },
       (error) => {
         console.error('Error checking user company status', error);
+        alert('Gagal memeriksa status perusahaan pengguna');
       }
     );
   }
@@ -78,24 +81,20 @@ export class CompanyComponent implements OnInit  {
   loadNotifications(): void {
     this.companyService.getNotifications().subscribe(
       data => {
-        console.log('Notifications data:', data);
         this.notifications = data;
         this.isNotifications = this.notifications.length > 0;
         this.isActiveNotifications = this.notifications.length > 0;
   
-        // Filter untuk offering (tawaran) dari company lain
         this.offerings = this.notifications.filter(notification => 
           notification.type === 'invitation' &&
           notification.id_user === this.currentUserId
         );
   
-        // Filter untuk invitation (mengundang) user lain ke company
         this.invitations = this.notifications.filter(notification => 
           notification.type === 'invitation' &&
           notification.requesting_id_user === this.currentUserId
         );
   
-        // Filter untuk user yang join ke company
         this.joins = this.notifications.filter(notification => 
           notification.type === 'join' &&
           notification.id_user === this.currentUserId
@@ -106,39 +105,39 @@ export class CompanyComponent implements OnInit  {
           notification.requesting_id_user === this.currentUserId
         );
   
-        // Sorting berdasarkan updated_at
         this.offerings.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
         this.invitations.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
         this.joins.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
       },
       error => {
         console.error('Error fetching notifications', error);
+        alert('Gagal mengambil notifikasi');
       }
     );
   }
-  
 
   respondToJoinRequest(notificationId: number, response: string): void {
     this.companyService.respondToJoinRequest(notificationId, response).subscribe(
       () => {
-        console.log('Join request response success');
-        // Remove or update notification
+        alert('Tanggapan permintaan bergabung berhasil');
         this.loadNotifications();
       },
       error => {
         console.error('Error responding to join request', error);
+        alert('Gagal menanggapi permintaan bergabung');
       }
     );
   }
 
   respondToInvitation(notificationId: number, response: string): void {
     this.companyService.respondToInvitation(notificationId, response).subscribe(
-      success => {
-        console.log('Response recorded successfully', success);
+      () => {
+        alert('Tanggapan undangan berhasil');
         this.loadNotifications();
       },
       error => {
         console.error('Error responding to notification', error);
+        alert('Gagal menanggapi undangan');
       }
     );
   }
@@ -153,27 +152,29 @@ export class CompanyComponent implements OnInit  {
         if (response.success) {
           this.companies = response.companies;
         } else {
-          console.error('Berhasil load notifikasi:', response);
+          console.error('Gagal memuat perusahaan', response);
+          alert('Gagal memuat perusahaan');
         }
       },
       error: (error) => {
         console.error('Error', error);
+        alert('Gagal memuat perusahaan');
       }
     });
   }
 
   deleteNotification(notificationId: number): void {
     this.companyService.deleteNotification(notificationId).subscribe(
-      success => {
-        console.log('Berhasil menghapus notifikasi', success);
+      () => {
+        alert('Notifikasi berhasil dihapus');
         this.loadNotifications();
       },
       error => {
-        console.error('Error', error);
+        console.error('Error deleting notification', error);
+        alert('Gagal menghapus notifikasi');
       }
     );
   }
-  
 
   selectTab(tab: string): void {
     this.selectedTab = tab;
@@ -182,26 +183,26 @@ export class CompanyComponent implements OnInit  {
   logout() {
     this.authService.logout().subscribe({
       next: () => {
-        // Logout berhasil
         alert('Logout berhasil');
-        this.router.navigate(['']); // Navigasi ke halaman utama
+        this.router.navigate(['']);
       },
       error: (error) => {
-        // Logout gagal
         alert('Logout gagal: ' + (error.error.message || 'Terjadi kesalahan saat logout'));
       }
     });
   }
+
   onSubmitCreate(createCompanyForm: NgForm) {
     if (createCompanyForm.valid) {
       this.companyService.createCompany(this.form).subscribe(
-        (response) => {
+        () => {
           this.hideBuatPerusahaanModal();
-          alert('Berhasil buat perusahaan')
-          window.location.reload();
+          alert('Perusahaan berhasil dibuat');
+          this.loadUserCompanies(); // Lebih baik muat ulang data perusahaan tanpa reload halaman
         },
-        (error) => {
+        error => {
           console.error('Gagal membuat perusahaan', error);
+          alert('Gagal membuat perusahaan');
         }
       );
     }
